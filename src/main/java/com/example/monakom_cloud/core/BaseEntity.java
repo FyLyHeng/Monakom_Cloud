@@ -1,10 +1,8 @@
-package com.example.monakom_cloud.model;
+package com.example.monakom_cloud.core;
 
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,8 +21,6 @@ import java.util.UUID;
  *
  * @author Christian Claus (ch.claus@me.com)
  */
-//@Data
-//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
@@ -32,25 +28,24 @@ import java.util.UUID;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id = UUID.randomUUID();
 
     @Version
-    private Integer version;
+    public Integer version;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    public Date createdDate;
 
     @CreatedBy
-    private String createdBy;
+    public String createdBy;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    public Date lastModifiedDate;
 
     @LastModifiedBy
-    private String lastModifiedBy;
+    public String lastModifiedBy;
 
-    private boolean deleted = false;
+    public boolean deleted = false;
 }

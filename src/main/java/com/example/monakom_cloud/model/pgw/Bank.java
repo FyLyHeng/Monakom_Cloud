@@ -1,8 +1,11 @@
 package com.example.monakom_cloud.model.pgw;
 
-import com.example.monakom_cloud.model.BaseEntity;
+import com.example.monakom_cloud.core.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -12,7 +15,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Bank extends BaseEntity {
 
-//    var id: UUID = UUID.randomUUID(),
+    @Id
+    public UUID id = UUID.randomUUID();
 //    var bankName : String = "",
 //    var bankCode : String? = "",
 //    var host : String? = "",
