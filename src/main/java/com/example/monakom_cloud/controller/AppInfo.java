@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/app")
 public class AppInfo extends GenericRestfulController<Bank> {
     public AppInfo(JSONFormat jsonResponse, BaseRepository<Bank> baseRepository) {
-        super(jsonResponse, baseRepository, resouceName);
+        super(jsonResponse, baseRepository);
     }
 
 
