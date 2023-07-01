@@ -20,20 +20,20 @@ import java.util.ArrayList;
 
 public abstract class GenericRestfulController<T> {
 
-    public final JSONFormat jsonResponse;
+    public final JSONFormat jsonFormat;
     public final BaseRepository<T> repository;
     private final String resourceName;
 
     @ConstructorParameters({"JSONFormat","BaseRepository<T>"})
-    public GenericRestfulController(JSONFormat jsonResponse, BaseRepository<T> baseRepository) {
-        this.jsonResponse = jsonResponse;
+    public GenericRestfulController(JSONFormat jsonFormat, BaseRepository<T> baseRepository) {
+        this.jsonFormat = jsonFormat;
         this.repository  = baseRepository;
         this.resourceName = this.getGenericTypeClass().getSimpleName();
     }
 
     @GetMapping("/all")
     public ResponseDTO all() {
-        return jsonResponse.responseObj(repository.findAll());
+        return jsonFormat.responseObj(repository.findAll());
     }
 
 
@@ -41,7 +41,7 @@ public abstract class GenericRestfulController<T> {
     public ResponseDTO getById(@PathVariable Long id) throws Throwable {
 
         var data = repository.findById(id).orElseThrow(this::notFoundThrowable);
-        return jsonResponse.responseObj(data);
+        return jsonFormat.responseObj(data);
     }
 
 
@@ -69,7 +69,7 @@ public abstract class GenericRestfulController<T> {
 
         Page<R> data = repository.findAll(search,customDto ,paging);
 
-        return jsonResponse.responseObj(data);
+        return jsonFormat.responseObj(data);
     }
 
 
