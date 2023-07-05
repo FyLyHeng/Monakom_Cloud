@@ -2,7 +2,10 @@ package com.example.monakom_cloud.model.pgw;
 
 import com.example.monakom_cloud.core.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.*;
+import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
@@ -16,7 +19,8 @@ import java.util.UUID;
 public class Bank extends BaseEntity {
 
     @Id
-    public UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 //    var bankName : String = "",
 //    var bankCode : String? = "",
 //    var host : String? = "",

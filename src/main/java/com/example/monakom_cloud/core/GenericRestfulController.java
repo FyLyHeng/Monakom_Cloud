@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.management.ConstructorParameters;
+import java.beans.ConstructorProperties;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public abstract class GenericRestfulController<T> {
@@ -24,7 +27,7 @@ public abstract class GenericRestfulController<T> {
     public final BaseRepository<T> repository;
     private final String resourceName;
 
-    @ConstructorParameters({"JSONFormat","BaseRepository<T>"})
+    @ConstructorProperties({"JSONFormat","BaseRepository<T>"})
     public GenericRestfulController(JSONFormat jsonFormat, BaseRepository<T> baseRepository) {
         this.jsonFormat = jsonFormat;
         this.repository  = baseRepository;
@@ -40,7 +43,7 @@ public abstract class GenericRestfulController<T> {
     @GetMapping("{id}")
     public ResponseDTO getById(@PathVariable Long id) throws Throwable {
 
-        var data = repository.findById(id).orElseThrow(this::notFoundThrowable);
+        T data = repository.findById(id).orElseThrow(this::notFoundThrowable);
         return jsonFormat.responseObj(data);
     }
 
@@ -55,21 +58,21 @@ public abstract class GenericRestfulController<T> {
     public <R>ResponseDTO list(Class<R> customDto) {
 
         Specification<T> search = (root, query, criteriaBuilder) -> {
-            ArrayList<Predicate> predicates = new ArrayList<>() {
-                {
-                    add(criteriaBuilder.like(criteriaBuilder.upper(root.get("posTerminalId")), "%${title.toString().uppercase(Locale.getDefault())}%"));
-                    add(criteriaBuilder.like(criteriaBuilder.upper(root.get("posTerminalId")), "%${title.toString().uppercase(Locale.getDefault())}%"));
-                }
-            };
+            List<Predicate> predicates = Arrays.asList(
 
-            return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
+                    criteriaBuilder.like(criteriaBuilder.upper(root.get("posTerminalId")), "%${title.toString().uppercase(Locale.getDefault())}%"),
+                    criteriaBuilder.like(criteriaBuilder.upper(root.get("posTerminalId")), "%${title.toString().uppercase(Locale.getDefault())}%")
+                );
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
 
         Pageable paging = PageRequest.of(0, 5, Sort.by("price").descending());
 
-        Page<R> data = repository.findAll(search,customDto ,paging);
+        //Page<R> data = repository.findAll(search ,paging);
+        //todo : add mapstruct for transform to DTO class
 
-        return jsonFormat.responseObj(data);
+        return jsonFormat.responseObj(null);
     }
 
 

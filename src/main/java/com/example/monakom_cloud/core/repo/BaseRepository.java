@@ -6,6 +6,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
 
 @NoRepositoryBean
-public interface BaseRepository<T> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T>, JpaSpecificationExecutorWithProjection<T, Long> {
+public interface BaseRepository<T> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> { //, JpaSpecificationExecutorWithProjection<T, Long>
 
 }

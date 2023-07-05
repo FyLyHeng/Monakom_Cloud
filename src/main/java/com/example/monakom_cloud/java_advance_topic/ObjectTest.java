@@ -1,15 +1,14 @@
 package com.example.monakom_cloud.java_advance_topic;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+//@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+//@Setter
+//@Getter
+@Data
 public class ObjectTest {
-        public int price;
-        public String brand;
+        private int price;
+        private String brand;
+
 }

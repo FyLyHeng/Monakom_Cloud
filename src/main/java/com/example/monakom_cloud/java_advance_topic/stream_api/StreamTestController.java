@@ -4,8 +4,9 @@ import com.example.monakom_cloud.java_advance_topic.ObjectTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class StreamTest {
+public class StreamTestController {
 
 
     void test1() {
@@ -16,10 +17,10 @@ public class StreamTest {
                 new ObjectTest(1000, "Audi")
         );
 
-        var carNameLength = cars.stream()
+        List<Integer> carNameLength = cars.stream()
                 .map(ObjectTest::getBrand)
                 .map(String::length)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     void test2() throws Exception {
@@ -28,7 +29,7 @@ public class StreamTest {
 
         var result = numbers.stream()
                 .map(n-> n*n)
-                .toList();
+                .collect(Collectors.toList());
 
         Integer r1 = numbers.stream().filter(a->a==1).findFirst().orElseThrow();
         Integer r2 = numbers.stream().filter(a->a==1).findFirst().orElseThrow(Exception::new); // = new Exception();

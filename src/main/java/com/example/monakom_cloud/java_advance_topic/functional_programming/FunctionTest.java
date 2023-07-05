@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FunctionTest {
 
@@ -40,8 +41,8 @@ public class FunctionTest {
          * - build-in function interface
          * - build-in map method with stream.api
          */
-        var studentNameAsALength2 = studentsName.stream().map(String::toUpperCase).toList();
-        var studentNameAsALength3 = studentsName.stream().map(String::toUpperCase).toList();
+        var studentNameAsALength2 = studentsName.stream().map(String::toUpperCase).collect(Collectors.toList());
+        var studentNameAsALength3 = studentsName.stream().map(String::toUpperCase).collect(Collectors.toList());
     }
 
     public static <T,R> List<R> mapCustom(List<T> list, Function<T,R> function) {

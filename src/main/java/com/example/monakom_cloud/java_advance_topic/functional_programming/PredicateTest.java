@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class PredicateTest {
     interface ApplePredicate {
@@ -52,12 +53,12 @@ public class PredicateTest {
          * - build-in Predicate and
          * - build-in filter method with stream.api
          */
-        List<Apple>redAppleWithWight5A = data.stream().filter(a-> Objects.equals(a.color, "red")).toList();
+        List<Apple>redAppleWithWight5A = data.stream().filter(a-> Objects.equals(a.color, "red")).collect(Collectors.toList());
         List<Apple> redAppleWithWight5 = data.stream().filter((Apple a)->
         {
             return Objects.equals(a.color, "red") && a.weight == 5;
         }
-        ).toList();
+        ).collect(Collectors.toList());
 
 
 
@@ -72,7 +73,7 @@ public class PredicateTest {
          */
 
         Predicate<Apple> yellowAppleNWight20 = (Apple a) -> a.color.equals("yellow") || a.weight==20;
-        List<Apple> myYellowAppleNWight20 = data.stream().filter(yellowAppleNWight20).toList();
+        List<Apple> myYellowAppleNWight20 = data.stream().filter(yellowAppleNWight20).collect(Collectors.toList());
 
 
 
