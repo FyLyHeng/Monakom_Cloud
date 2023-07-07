@@ -1,12 +1,11 @@
-package com.example.monakom_cloud.java_advance_topic.stream_test;
+package com.example.monakom_cloud.java_advance_topic.stream_api_test.service;
 
-import com.example.monakom_cloud.dto.TransactionDTO;
-import com.example.monakom_cloud.java_advance_topic.stream_test.EconomicClass;
-import com.example.monakom_cloud.java_advance_topic.stream_test.Trader;
-import com.example.monakom_cloud.java_advance_topic.stream_test.Transaction;
+import com.example.monakom_cloud.java_advance_topic.ObjectTest;
+import com.example.monakom_cloud.java_advance_topic.stream_api_test.model.EconomicClass;
+import com.example.monakom_cloud.java_advance_topic.stream_api_test.model.Trader;
+import com.example.monakom_cloud.java_advance_topic.stream_api_test.model.Transaction;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Mapper(componentModel = "spring")
-@Qualifier("v1")
-@Primary
-public abstract class StreamApiTestService {
+public class StreamApiTestService {
 
 
     Trader liza = new Trader("liza","PP", EconomicClass.WEALTHY);
@@ -44,27 +40,7 @@ public abstract class StreamApiTestService {
     }
 
 
-    public List<TransactionDTO> test1(List<Transaction> transactions) {
-
-        List<TransactionDTO> result = transactions.stream()
-                .filter(x -> 2011 == x.getYear() && Objects.equals("liza", x.getTrader().getName()))
-                .sorted(Comparator.comparing(Transaction::getValue))
-                //.map(TransactionMapper.INSTANCE::convert)
-                .map(this::convert)
-                .collect(Collectors.toList());
-
-        log.info(result.toString());
-
-
-        return result;
-    }
-
-    @Mapping(target = "traderName", source="trader.name")
-    public abstract TransactionDTO convert(Transaction transaction);
-
-
-
-    public List<String> test2 (List<Transaction> transactions) {
+    public List<String> listAllAndSelectCity(List<Transaction> transactions) {
         return transactions.stream()
                 .map(x-> x.getTrader().getCity())
                 .distinct()
@@ -72,13 +48,43 @@ public abstract class StreamApiTestService {
     }
 
 
-    public List<Trader> test3 (List<Transaction> transactions) {
+    public List<Trader> findAllByCityAndSelectTrader(List<Transaction> transactions) {
         return transactions.stream()
                 .map(Transaction::getTrader)
                 .filter(trader -> Objects.equals(trader.getCity(), "PP"))
                 .sorted(Comparator.comparing(Trader::getName))
                 .collect(Collectors.toList());
     }
+
+
+    void test1() {
+
+        List<ObjectTest> cars = Arrays.asList(
+                new ObjectTest(1000, "BMW"),
+                new ObjectTest(1000, "Honda"),
+                new ObjectTest(1000, "Audi")
+        );
+
+        List<Integer> carNameLength = cars.stream()
+                .map(ObjectTest::getBrand)
+                .map(String::length)
+                .collect(Collectors.toList());
+    }
+
+    void test2() throws Exception {
+
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5);
+
+        var result = numbers.stream()
+                .map(n-> n*n)
+                .collect(Collectors.toList());
+
+        Integer r1 = numbers.stream().filter(a->a==1).findFirst().orElseThrow();
+        Integer r2 = numbers.stream().filter(a->a==1).findFirst().orElseThrow(Exception::new); // = new Exception();
+        Integer r3 = numbers.stream().filter(a->a==1).findFirst().orElseThrow(() -> new Exception("filter r1 not found"));
+    }
+
+
 
     public String test4 (List<Transaction> transactions) {
         return transactions.stream()
@@ -117,4 +123,6 @@ public abstract class StreamApiTestService {
 
                 ).orElse(new Transaction(1700, 0, new Trader("N/A","N/A", EconomicClass.N_A)));
     }
+
+
 }

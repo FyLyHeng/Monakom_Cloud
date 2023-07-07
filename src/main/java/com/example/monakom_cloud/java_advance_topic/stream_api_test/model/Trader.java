@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.java_advance_topic.stream_test;
+package com.example.monakom_cloud.java_advance_topic.stream_api_test.model;
 
 
 import lombok.AllArgsConstructor;

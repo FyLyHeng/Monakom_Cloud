@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.dto;
+package com.example.monakom_cloud.java_advance_topic.map_struct_test;
 
 import lombok.*;
 
