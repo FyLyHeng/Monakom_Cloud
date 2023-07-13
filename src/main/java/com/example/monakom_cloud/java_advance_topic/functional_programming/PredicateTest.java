@@ -1,6 +1,6 @@
 package com.example.monakom_cloud.java_advance_topic.functional_programming;
 
-import com.example.monakom_cloud.java_advance_topic.java8.Apple;
+import com.example.monakom_cloud.java_advance_topic.test.Apple;
 
 import java.util.ArrayList;
 import java.util.Arrays;

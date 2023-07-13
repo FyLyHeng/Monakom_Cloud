@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.java_advance_topic.java8;
+package com.example.monakom_cloud.java_advance_topic.test;
 
 public class Apple {
 

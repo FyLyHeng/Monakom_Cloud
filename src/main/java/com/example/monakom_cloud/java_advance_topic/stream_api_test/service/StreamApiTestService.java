@@ -27,12 +27,12 @@ public class StreamApiTestService {
     Trader heng = new Trader("heng","YK", EconomicClass.SUPERSEDED_CLASS);
 
     List<Transaction> transactions = Arrays.asList(
-            new Transaction(2012, 100.20,liza),
-            new Transaction(2011, 300,liza),
-            new Transaction(2013, 1000,bopha),
-            new Transaction(2011, 500,rachna),
-            new Transaction(2020, 650.10,heng),
-            new Transaction(2023, 700,heng)
+            new Transaction(2012, 100.20,false,liza),
+            new Transaction(2011, 300,false,liza),
+            new Transaction(2013, 1001,true,bopha),
+            new Transaction(2011, 501,true,rachna),
+            new Transaction(2020, 650.10,true,heng),
+            new Transaction(2023, 700,true,heng)
     );
 
     public List<Transaction> getAllTransaction () {
@@ -114,14 +114,13 @@ public class StreamApiTestService {
         return style2;
     }
 
-
     public Transaction getByBiggestTrxValue (List<Transaction> transactions) {
         return transactions.stream()
                 .reduce((a,b) ->
 
                         a.getYear() < b.getYear() ? a : b
 
-                ).orElse(new Transaction(1700, 0, new Trader("N/A","N/A", EconomicClass.N_A)));
+                ).orElse(new Transaction(1700, 0,true, new Trader("N/A","N/A", EconomicClass.N_A)));
     }
 
 

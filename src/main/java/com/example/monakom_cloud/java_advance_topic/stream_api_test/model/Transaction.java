@@ -12,5 +12,6 @@ public class Transaction {
 
     private int year;
     private double value;
+    private boolean isExpansive;
     private Trader trader;
 }
