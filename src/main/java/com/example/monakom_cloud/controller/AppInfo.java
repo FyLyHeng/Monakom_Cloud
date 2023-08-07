@@ -1,11 +1,5 @@
 package com.example.monakom_cloud.controller;
 
-import com.example.monakom_cloud.core.GenericRestfulController;
-import com.example.monakom_cloud.core.repo.BaseRepository;
-import com.example.monakom_cloud.core.response.JSONFormat;
-import com.example.monakom_cloud.core.response.ResponseDTO;
-import com.example.monakom_cloud.model.pgw.Bank;
-import com.example.monakom_cloud.model.pgw.BankDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +8,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/app")
-public class AppInfo extends GenericRestfulController<Bank> {
-    public AppInfo(JSONFormat jsonResponse, BaseRepository<Bank> baseRepository) {
-        super(jsonResponse, baseRepository);
-    }
+public class AppInfo  {
+
 
 
     @GetMapping("/info")
@@ -31,15 +23,15 @@ public class AppInfo extends GenericRestfulController<Bank> {
         );
     }
 
-    @Override
+
     @GetMapping("/all")
-    public ResponseDTO all() {
+    public String all() {
         System.out.println("Me override ab base class in All");
-        return super.all();
+        return "";
     }
 
     @GetMapping("/list-dto")
-    public ResponseDTO list() {
-        return super.list(BankDto.class);
+    public String list() {
+        return "";//jsonFormat.responseObj(Arrays.asList("string1", "string2"));//bankRepository.findAll()
     }
 }

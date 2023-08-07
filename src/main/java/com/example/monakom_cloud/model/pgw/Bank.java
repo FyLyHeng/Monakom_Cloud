@@ -5,10 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.*;
-import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.data.annotation.Id;
 
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,7 +18,7 @@ public class Bank extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 //    var bankName : String = "",
 //    var bankCode : String? = "",
 //    var host : String? = "",

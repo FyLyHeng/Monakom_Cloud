@@ -28,20 +28,20 @@ import java.util.UUID;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private Long id;
 
     @Version
     public Integer version;
 
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     public Date createdDate;
 
     @CreatedBy
     public String createdBy;
 
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     public Date lastModifiedDate;
 
     @LastModifiedBy

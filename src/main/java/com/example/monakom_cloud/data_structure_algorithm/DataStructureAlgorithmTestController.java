@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+
 @Slf4j
 @RestController
 @RequestMapping("dsa")
@@ -90,5 +92,19 @@ public class DataStructureAlgorithmTestController {
         arrayTestOne.insert(2,50);
         arrayTestOne.insert(1,15);
         arrayTestOne.insert(12,20);
+
+        log.info("One dimension array");
+        log.info(Arrays.toString(arrayTestOne.arr));
+
+
+
+        MyArrayTestTwo arrayTestTwo = new MyArrayTestTwo(2,2);
+        arrayTestTwo.insert(0,0,10);
+        arrayTestTwo.insert(0,1,20);
+        arrayTestTwo.insert(0,0,30);
+        arrayTestTwo.insert(1,3,30);
+
+        log.info("Two dimension array");
+        log.info(Arrays.deepToString(arrayTestTwo.arr));
     }
 }
