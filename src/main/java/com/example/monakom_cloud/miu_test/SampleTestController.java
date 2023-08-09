@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.Scanner;
 
 @Slf4j
 @RestController
@@ -184,6 +183,226 @@ public class SampleTestController {
         } catch (ArrayIndexOutOfBoundsException e) {
             return "null";
         }
+    }
+
+
+    /**
+     * Question 4
+     * Write a function to reverse an integer using numeric operators and without
+     * using any arrays or other data structures.
+
+     * The signature of the function is:
+     * int f(int n)
+     * Examples
+
+     *  --------------------------------|--------------------------------------------------------------
+     * | if the input integer is        | return                                                       |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | 1234                           | 4321                                                         |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | 12005                          | 50021                                                        |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | 1                              | 1                                                            |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | 1000                           | 1                                                            |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | 0                              | 0                                                            |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | -12345                         | -54321                                                       |
+     *  --------------------------------|--------------------------------------------------------------
+     */
+    @GetMapping("/q4")
+    public Integer test4(@RequestParam int number) {
+
+
+        //step 1 if number negative
+        //step 2 make negative to positive => to fit with formula
+        //step 3 apply revers formula
+        //step 4 return the positive and multiply with signe
+        //      - if input negative
+        //      - return must as same as input (negative)
+
+
+        //step 1
+        int sing = 1;
+        if (number<0){
+            //step 2
+            number = -number;
+            sing = -1;
+        }
+
+        //step 3
+        int n = 0;
+        while (number!=0){
+
+
+
+            // (number % 10) with somnol after. -> (a)
+            // (sommol after. * 10)             -> (b)
+            // a + b => to keep the digit consequent
+
+
+            // ex
+            //  => (1234 % 10) = 0.4
+            //  => 0.4 * 10 => 4
+
+
+            // next loop (n*10) + (number % 10)
+            //           (4*10) + (3) => 43
+
+            n= (n*10) + (number % 10);
+
+            // (number / 10) to drop the last digit
+            // ex
+            // => (1234 / 10) => 123.4
+            // => number = 123
+            number = number / 10;
+
+        }
+
+        //step 4
+        return n*sing;
+    }
+
+
+
+    /**
+     * Question 5
+     * Write a function to return an array containing all elements common to two
+     * given arrays containing distinct positive integers. You should not use any inbuilt
+     * methods. You are allowed to use any number of arrays.
+
+     * The signature of the function is:
+     * int[] f(int[] first, int[] second)
+
+     * Examples:
+     *  --------------------------------|--------------------------------------------------------------
+     * | if the input parameters are    | return                                                       |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,8,3,2},{4,2,6,1}            | {1,2}                                                        |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,8,3,2,6},{2,6,1}            | {2,6,1}                                                      |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,3,7,9},{7,1,9,3}            | {1,3,7,9}                                                    |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,2}, {3,4}                   | {}                                                           |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {}, {1,2,3}                    | {}                                                           |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,2}, {}                      | {}                                                           |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | {1,2}, null                    | null                                                         |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | null, {}                       | null                                                         |
+     * |--------------------------------|--------------------------------------------------------------|
+     * | null, null                     | null                                                         |
+     *  --------------------------------|--------------------------------------------------------------
+
+     * NOTE: To ease debugging, Will return a string array.
+     */
+    @GetMapping("/q5")
+    public String test5(@RequestParam int[] arr1, @RequestParam int[] arr2) {
+
+
+        log.info("arr1 " + Arrays.toString(arr1));
+        log.info("arr2 " + Arrays.toString(arr2));
+
+        if (arr1 == null || arr2 == null) return "null";
+        if (arr1.length == 0 || arr2.length == 0) return "[]";
+
+        int minSizeArr;
+        int[] clone1, clone2;
+        if (arr1.length < arr2.length) {
+            clone1 = arr1;
+            clone2 = arr2;
+            minSizeArr = arr1.length;
+        } else {
+            clone1 = arr2;
+            clone2 = arr1;
+            minSizeArr = arr2.length;
+        }
+
+
+        int[] r = new int[minSizeArr];
+        int found = 0;
+
+
+        for (int i = 0; i < clone1.length; i++) {
+
+            for (int k = 0; k < clone2.length; k++) {
+                if (clone1[i] == clone2[k]) {
+                    log.error("found : "+ clone2[k]);
+                    r[found] = clone2[k];
+                    found++;
+                }
+            }
+
+        }
+
+
+        int[] foundElement = new int[found];
+
+        for (int i = 0; i < foundElement.length; i++) {
+
+            if (r[i] != 0)
+                foundElement[i] = r[i];
+        }
+
+        return Arrays.toString(foundElement);
+
+    }
+
+
+    /**
+     * Question 6
+     * Consider an array A with n of positive integers. An integer idx is called
+     * a POE (point of equilibrium) of A, if A[0]+A[1]+...+A[idx-1] is equal to A[idx+1]+A[idx+2]+...+A[n-1].
+     * Write a function to return POE of an array, if it exists and -1 otherwise.
+
+     * The signature of the function is:
+     * int f(int[] a)
+
+     * Examples
+     *  -------------------------|--------------------------------------------------------------
+     * | if the input arrays are | return                                                       |
+     * |-------------------------|--------------------------------------------------------------|
+     * | {1,8,3,7,10,2}          | 3 Reason: a[0]+a[1]+a[2] is equal to a[4]+a[5]               |
+     * |-------------------------|--------------------------------------------------------------|
+     * | {1,5,3,1,1,1,1,1,1}     | 2 Reason: a[0]+a[1] is equal to a[3]+a[4]+a[5]+a[6]+a[7]+a[8]|
+     * |-------------------------|--------------------------------------------------------------|
+     * | {2,1,1,1,2,1,7}         | 5 Reason: a[0]+a[1]+a[2]+a[3]+a[4] is equal to a[6]          |
+     * |-------------------------|--------------------------------------------------------------|
+     * | {1,2,3}                 | -1 Reason: No POE                                            |
+     * |-------------------------|--------------------------------------------------------------|
+     * | {3,4,5,10}              | -1 Reason: No POE                                            |
+     * |-------------------------|--------------------------------------------------------------|
+     * | {1,2,10,3,4}            | -1 Reason: No POE                                            |
+     *  -------------------------|--------------------------------------------------------------
+     */
+
+    @GetMapping("/q6")
+    public Integer test6(@RequestParam int[] arr) {
+
+        int poe = -1;
+        int sumA = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            sumA += arr[i];
+
+            int sumB = 0;
+            for (int j = i+2; j < arr.length; j++) {
+                sumB += arr[j];
+            }
+
+            //log.warn("sumA : "+ sumA + ", sumB : "+ sumB);
+
+            if (sumA == sumB){
+                poe = i+1;
+                break;
+            }
+        }
+
+        return poe;
     }
 
 }
