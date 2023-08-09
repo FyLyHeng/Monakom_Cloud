@@ -18,7 +18,6 @@ public class SampleTestController {
 
 
     /**
-     *
      * Question 1
      * An array with an odd number of elements is said to be centered
      * if all elements (except the middle one) are strictly greater than the value
@@ -26,7 +25,7 @@ public class SampleTestController {
      * have a middle element. Write a function that accepts an integer array and
      * returns 1 if it is a centered array, otherwise it returns 0.
      * Examples:
-     *  -----------------------|-----------------------------------------------------------------------
+     * -----------------------|-----------------------------------------------------------------------
      * | if the input array is | return                                                                |
      * |-----------------------|-----------------------------------------------------------------------|
      * | {1,2,3,4,5}           | 0 (the middle element 3 is not strictly less than all other elements) |
@@ -40,8 +39,7 @@ public class SampleTestController {
      * | {}                    | 0 (no middle element)                                                 |
      * |-----------------------|-----------------------------------------------------------------------|
      * | {10}                  | 1 (the middle element 10 is strictly less than all other elements)    |
-     *  -----------------------------------------------------------------------------------------------
-     *
+     * -----------------------------------------------------------------------------------------------
      */
 
     @GetMapping("/q1")
@@ -52,19 +50,19 @@ public class SampleTestController {
         log.info("array length  :" + aLength);
         log.info("array element :" + Arrays.toString(arr));
 
-        if (aLength == 0 || aLength %2 == 0) {
+        if (aLength == 0 || aLength % 2 == 0) {
             return 0;
         }
 
-        var midIndex = aLength/2;
+        var midIndex = aLength / 2;
         var midElement = arr[midIndex];
-        log.info("min of array : "+ midIndex);
-        log.info("min of array : "+ midElement);
+        log.info("min of array : " + midIndex);
+        log.info("min of array : " + midElement);
 
 
         for (int i = 0; i < arr.length; i++) {
 
-            if (midIndex != i && arr[i]<= midElement) {
+            if (midIndex != i && arr[i] <= midElement) {
                 return 0;
             }
         }
@@ -74,14 +72,14 @@ public class SampleTestController {
 
 
     /**
-     *Question 2
+     * Question 2
      * Write a function that takes an array of integers as an argument and returns a
      * value based on the sums of the even and odd numbers in the array. Let X = the sum of the odd
      * numbers in the array and let Y = the sum of the even numbers. The function should return X - Y
      * The signature of the function is:
      * int f(int[] a)
      * Examples:
-     *  -----------------------|-----------------------------------------------------------------------
+     * -----------------------|-----------------------------------------------------------------------
      * | if input array is     | return                                                                |
      * |-----------------------|-----------------------------------------------------------------------|
      * | {1}                   | 1                                                                     |
@@ -95,7 +93,7 @@ public class SampleTestController {
      * | {3,3,4,4}             | -2                                                                    |
      * |-----------------------|-----------------------------------------------------------------------|
      * | {}                    | 0                                                                     |
-     *  -----------------------------------------------------------------------------------------------
+     * -----------------------------------------------------------------------------------------------
      */
 
     @GetMapping("/q2")
@@ -114,7 +112,7 @@ public class SampleTestController {
 
         log.info(MessageFormat.format("ood : {0}, even : {1}", ood, even));
 
-        return ood-even;
+        return ood - even;
 
     }
 
@@ -125,10 +123,10 @@ public class SampleTestController {
      * a length. It should return a character array containing lengthCharacters starting with
      * the startCharacter of the input array. The function should do error checking on the start
      * position and the length and return null if the either value is not legal.
-
+     * <p>
      * The function signature is:
      * char[] f(char[] a, int start, int len)
-     *  --------------------------------|--------------------------------------------------------------
+     * --------------------------------|--------------------------------------------------------------
      * | if the input parameters are is | return                                                       |
      * |--------------------------------|--------------------------------------------------------------|
      * | {'a','b','c'}, 0, 4            | null                                                         |
@@ -158,14 +156,16 @@ public class SampleTestController {
      * | {'a','b','c'}, -1, -2          | null                                                         |
      * |--------------------------------|--------------------------------------------------------------|
      * | {}, 0, 1                       | null                                                         |
-     *  -----------------------------------------------------------------------------------------------
+     * -----------------------------------------------------------------------------------------------
      * NOTE: To ease debugging, i will return string containing the characters
      */
     @GetMapping("/q3")
     public Object test3(@RequestParam char[] chars, @RequestParam int start, @RequestParam int length) {
 
         try {
-            if (start<0 || length<0) {return "null";}
+            if (start < 0 || length < 0) {
+                return "null";
+            }
 
             var arrayResult = new char[length];
 
@@ -190,12 +190,12 @@ public class SampleTestController {
      * Question 4
      * Write a function to reverse an integer using numeric operators and without
      * using any arrays or other data structures.
-
+     * <p>
      * The signature of the function is:
      * int f(int n)
      * Examples
-
-     *  --------------------------------|--------------------------------------------------------------
+     * <p>
+     * --------------------------------|--------------------------------------------------------------
      * | if the input integer is        | return                                                       |
      * |--------------------------------|--------------------------------------------------------------|
      * | 1234                           | 4321                                                         |
@@ -209,7 +209,7 @@ public class SampleTestController {
      * | 0                              | 0                                                            |
      * |--------------------------------|--------------------------------------------------------------|
      * | -12345                         | -54321                                                       |
-     *  --------------------------------|--------------------------------------------------------------
+     * --------------------------------|--------------------------------------------------------------
      */
     @GetMapping("/q4")
     public Integer test4(@RequestParam int number) {
@@ -225,7 +225,7 @@ public class SampleTestController {
 
         //step 1
         int sing = 1;
-        if (number<0){
+        if (number < 0) {
             //step 2
             number = -number;
             sing = -1;
@@ -233,8 +233,7 @@ public class SampleTestController {
 
         //step 3
         int n = 0;
-        while (number!=0){
-
+        while (number != 0) {
 
 
             // (number % 10) with somnol after. -> (a)
@@ -250,7 +249,7 @@ public class SampleTestController {
             // next loop (n*10) + (number % 10)
             //           (4*10) + (3) => 43
 
-            n= (n*10) + (number % 10);
+            n = (n * 10) + (number % 10);
 
             // (number / 10) to drop the last digit
             // ex
@@ -261,9 +260,8 @@ public class SampleTestController {
         }
 
         //step 4
-        return n*sing;
+        return n * sing;
     }
-
 
 
     /**
@@ -271,12 +269,12 @@ public class SampleTestController {
      * Write a function to return an array containing all elements common to two
      * given arrays containing distinct positive integers. You should not use any inbuilt
      * methods. You are allowed to use any number of arrays.
-
+     * <p>
      * The signature of the function is:
      * int[] f(int[] first, int[] second)
-
+     * <p>
      * Examples:
-     *  --------------------------------|--------------------------------------------------------------
+     * --------------------------------|--------------------------------------------------------------
      * | if the input parameters are    | return                                                       |
      * |--------------------------------|--------------------------------------------------------------|
      * | {1,8,3,2},{4,2,6,1}            | {1,2}                                                        |
@@ -296,8 +294,8 @@ public class SampleTestController {
      * | null, {}                       | null                                                         |
      * |--------------------------------|--------------------------------------------------------------|
      * | null, null                     | null                                                         |
-     *  --------------------------------|--------------------------------------------------------------
-
+     * --------------------------------|--------------------------------------------------------------
+     * <p>
      * NOTE: To ease debugging, Will return a string array.
      */
     @GetMapping("/q5")
@@ -331,7 +329,7 @@ public class SampleTestController {
 
             for (int k = 0; k < clone2.length; k++) {
                 if (clone1[i] == clone2[k]) {
-                    log.error("found : "+ clone2[k]);
+                    log.error("found : " + clone2[k]);
                     r[found] = clone2[k];
                     found++;
                 }
@@ -358,12 +356,12 @@ public class SampleTestController {
      * Consider an array A with n of positive integers. An integer idx is called
      * a POE (point of equilibrium) of A, if A[0]+A[1]+...+A[idx-1] is equal to A[idx+1]+A[idx+2]+...+A[n-1].
      * Write a function to return POE of an array, if it exists and -1 otherwise.
-
+     * <p>
      * The signature of the function is:
      * int f(int[] a)
-
+     * <p>
      * Examples
-     *  -------------------------|--------------------------------------------------------------
+     * |-------------------------|--------------------------------------------------------------|
      * | if the input arrays are | return                                                       |
      * |-------------------------|--------------------------------------------------------------|
      * | {1,8,3,7,10,2}          | 3 Reason: a[0]+a[1]+a[2] is equal to a[4]+a[5]               |
@@ -377,12 +375,14 @@ public class SampleTestController {
      * | {3,4,5,10}              | -1 Reason: No POE                                            |
      * |-------------------------|--------------------------------------------------------------|
      * | {1,2,10,3,4}            | -1 Reason: No POE                                            |
-     *  -------------------------|--------------------------------------------------------------
+     * |-------------------------|--------------------------------------------------------------|
      */
 
     @GetMapping("/q6")
     public Integer test6(@RequestParam int[] arr) {
 
+        // style 1
+        /*
         int poe = -1;
         int sumA = 0;
 
@@ -390,19 +390,215 @@ public class SampleTestController {
             sumA += arr[i];
 
             int sumB = 0;
-            for (int j = i+2; j < arr.length; j++) {
+            for (int j = i + 2; j < arr.length; j++) {
                 sumB += arr[j];
             }
 
             //log.warn("sumA : "+ sumA + ", sumB : "+ sumB);
 
-            if (sumA == sumB){
-                poe = i+1;
+            if (sumA == sumB) {
+                poe = i + 1;
                 break;
             }
         }
-
         return poe;
+        */
+
+
+        //style 2
+        //very advance, I never think about that kine of solution
+
+        if (arr.length < 3) return -1;
+        int i = 0;
+        int j = arr.length - 1;
+        int idx = 1;
+        int leftSum = arr[i];
+        int rightSum = arr[j];
+        for (int k = 1; k < arr.length - 2; k++) {
+            if (leftSum < rightSum) {
+                i++;
+                leftSum += arr[i];
+                idx = i + 1;
+            } else {
+                j--;
+                rightSum += arr[j];
+                idx = j - 1;
+            }
+
+            log.warn("leftSum :"+leftSum+", rightSum :"+rightSum+" idx :"+idx);
+        }
+        if (leftSum == rightSum)
+            return idx;
+        else
+            return -1;
     }
 
+
+    /**
+     * Question 7
+     * Write a function nextPerfectSquare that returns the first perfect square that is greater than
+     * it's integer argument. A perfect square is an integer that is equal to some integer squared.
+
+     * For example 16 is a perfect square because 16 = 4*4. However 15 is not a perfect square because
+     * there is no integer n such that 15 = n*n.
+
+     * The signature of the function is
+     * int isPerfectSquare(int n)
+     * Examples
+     *  -------------------------|--------------------------------------------------------------
+     * | n                       | next perfect square                                          |
+     * |-------------------------|--------------------------------------------------------------|
+     * | 6                       | 9                                                            |
+     * |-------------------------|--------------------------------------------------------------|
+     * | 36                      | 49                                                           |
+     * |-------------------------|--------------------------------------------------------------|
+     * | 0                       | 1                                                            |
+     * |-------------------------|--------------------------------------------------------------|
+     * | -5                      | 0                                                            |
+     *  -------------------------|--------------------------------------------------------------
+     */
+
+    /**
+     * perfectSquare
+     * 1	=	1 × 1	=	1.pow(2)
+     * 4	=	2 × 2	=	2.pow(2)
+     * 9	=	3 × 3	=	3.pow(2)
+     * 16	=	4 × 4	=	4.pow(2)
+     * 25	=	5 × 5	=	5.pow(2)
+     * 36	=	6 × 6	=	6.pow(2)
+     * 49	=	7 × 7	=	7.pow(2)
+     * 64	=	8 × 8	=	8.pow(2)
+     * 81	=	9 × 9	=	9.pow(2)
+     * 100	=	10 × 10	=	10.pow(2)
+     */
+    @GetMapping("/q7")
+    public Integer test7(@RequestParam int n) {
+
+        if (n<0) return 0;
+
+
+        //to find the Square number
+        //ex1 : 9
+        //   => s = 3
+        //   because 3.pow(2) = 9
+
+
+        //to find the Square number
+        //ex2 : 10
+        //   => s = 3.16
+        //   => s (3.16) + 1 => 4.16
+        //   s.toInt() => 4
+        //   because 4.pow(2) = 16
+
+        double perfectSquare = Math.sqrt(n);
+        int base = (int) (perfectSquare+1);
+
+
+        log.warn("perfectSquare :"+perfectSquare +" => "+base);
+
+        return (int) Math.pow(base,2);
+
+    }
+
+
+    /**
+     * Question 8
+     * Define the n-upcount of an array to be the number of times the partial sum goes from less than
+     * or equal to n to greater than n during the calculation of the sum of elements of the array.
+     * if you are programming in Java or C#, the function signature is int nUpCount(int[] a, int n)
+
+     * For example, if n=5, the 5-upcount of the array {2,3,1,-6,8,-3,-1,2} is 3.
+     *  ------|--------|--------------|---------|---------------------------------
+     * |index |element | partial sum  | upcount | comment                         |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 0    | 2    | 2            |         |                                 |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 1    | 3    | 5            |         |                                 |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 2    | 1    | 6            | 1       | partial sum goes from 5 to 6    |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 3    | -6   | 0            |         |                                 |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 4    | 8    | 8            | 2       | partial sum goes from 0 to 8    |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 5    | -3   | 5            |         |                                 |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 6    | -1   | 4            |         |                                 |
+     * |------|------|--------------|---------|---------------------------------|
+     * | 7    | 2    | 6            | 3       | partial sum goes from 4 to 6    |
+     *  ------|------|--------------|---------|---------------------------------
+     */
+    @GetMapping("/q8")
+    public Integer test8(@RequestParam int[] arr, @RequestParam int n){
+
+
+        int sum = 0;
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum +=arr[i];
+            log.warn("sum : "+sum);
+            if ( sum> n ){
+
+                //sum = 0;
+                count++;
+                log.error("count :"+count);
+            }
+        }
+
+        return count;
+    }
+
+
+
+    /**
+     * Question 9
+     * Write a function named primeCount with signature int primeCount(int start, int end);
+     * The function returns the number of primes between start and end inclusive.
+     * Recall that a prime is a positive integer greater than 1 whose only integer factors are 1 and itself.
+
+     * Examples
+     *  -------------|------------|---------|------------------------------------------------------------------
+     * | if start is | and end is | return  | reason                                                           |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 10          | 30         | 6       | The primes between 10 and 30 inclusive are 11,13,17,19,23 and 29 |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 11          | 29         | 6       | The primes between 11 and 29 inclusive are 11,13,17,19,23 and 29 |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 20          | 22         | 0       | 20,21, and 22 are all non-prime                                  |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 1           | 1          | 0       | By definition, 1 is not a prime number                           |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 5           | 5          | 1       | 5 is a prime number                                              |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | 6           | 2          | 0       | start must be less than or equal to end                          |
+     * |-------------|------------|---------|------------------------------------------------------------------|
+     * | -10         | 6          | 3       | primes are greater than 1. 2, 3 and 5 are prime                  |
+     *  -------------|------------|---------|------------------------------------------------------------------
+     */
+    @GetMapping("/q9")
+    public Integer test9(@RequestParam int start, @RequestParam int end) {
+
+        int count = 0;
+
+        for (int i = start; i < end; i++) {
+            boolean isPrime = true;
+
+            if (i > 1) {
+
+                for (int j = 2; j * 2 <= i; j++) {
+
+                    if (i % j == 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+
+                if (isPrime) {
+                    log.error("prime "+i);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 }
