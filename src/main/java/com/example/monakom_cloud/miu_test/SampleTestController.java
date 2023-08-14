@@ -727,4 +727,126 @@ public class SampleTestController {
         }
         return isBean;
     }
+
+
+    /**
+     * Question 13
+     * Consider the positive integer 50. Note that 50 = 25 + 25 = 5^2 + 5^2 and 50 = 1 + 49 = 1^2 + 7^2,
+     * Thus 50 can be expressed as a sum of the two squares in two different ways.
+     * Write a method whether or not a positive integer n can be expressed as a sum of two squares in
+     * exactly two different ways.
+     * The signature of the function is
+     * int answerOne(int n)
+     */
+
+    @GetMapping("/q13")
+    public String test13(@RequestParam int n) {
+
+        for (int i = 0; i <= n/2; i++) {
+
+            int s1 = (int) Math.sqrt(i);
+            int s2 = (int) Math.sqrt(n-i);
+
+            if ( (Math.pow(s1,2)) + (Math.pow(s2,2)) == n){
+                System.out.println(MessageFormat.format("Found : {0} = {1}^2 + {2}^2", n,s1,s2));
+                return "Found";
+            }
+        }
+        return n + " cannot be expressed as a sum of two squares";
+    }
+
+
+    /**
+     * Question 14
+     * Write a function that will return the most occurring number in an array. If there is more than
+     * one such number, the function may return any one of them.
+     * If you are programming in Java or C#, the function signature is int answerTwo(int[] a)
+     *
+     * Examples
+     *  -------------------------|----------|------------------------------------------------------------
+     * | a                       | return   | Explanation                                                |
+     * |-------------------------|----------|------------------------------------------------------------|
+     * | {6,8,1,8,2}             | 8        | 8 occurs two times. No other number occurs 3 or more times |
+     * |-------------------------|----------|------------------------------------------------------------|
+     * | {6,8,1,8,6,8}           | 8 or 6   | 8, 6. The Function may return either 8 or 6                |
+     *  -------------------------|----------|------------------------------------------------------------
+
+     */
+    @GetMapping("/q14")
+    public int test14(@RequestParam int[] n) {
+
+        int mostOccurring = 0,pMostOccurring  = 0;
+        int occurring = -1,pOccurring = -1;
+
+
+        for (int i = 0; i < n.length; i++) {
+
+            for (int j = i+1; j < n.length; j++) {
+
+                if (n[i] == n[j]) {
+
+                    if (mostOccurring>0){
+
+                        if (occurring==n[i]){
+                            mostOccurring++;
+                        }else {
+                            pOccurring = occurring;
+                            pMostOccurring = mostOccurring;
+
+                            occurring = n[i];
+                            mostOccurring++;
+                        }
+                    }else {
+                        occurring = n[i];
+                        mostOccurring++;
+                    }
+                }
+            }
+        }
+
+        if (pMostOccurring>mostOccurring){
+            return pOccurring;
+        }else {
+            return occurring;
+        }
+    }
+
+
+    /**
+     * Question 15
+     * Write a function that will return 1 if an integer array satisfies the following conditions and returns 0 otherwise.
+     * 1. it has even numbers of elements
+     * 2. Sum of all the numbers in the first half of the array is equal to the sum of all the numbers in the second half of the array.
+     *
+     * If you are programming in Java, the function Signature is
+     * int answerThree(int[] a)
+     * Examples
+     *  -------------------|--------|-----------------------------------------------------------------------
+     * | a                 | return | Explanation                                                           |
+     * |-------------------|--------|-----------------------------------------------------------------------|
+     * | {5,4,3,2,3,4,6,1} | 1      | *There are 8 (even) number of elements in the array. Thus condition 1 |
+     * |                   |        | satisfied.                                                            |
+     * |                   |        | *The sum of all the numbers in the first half = 5+4+3+2 = 14          |
+     *  -------------------|--------|-----------------------------------------------------------------------
+     */
+
+    @GetMapping("/q15")
+    public int test15(@RequestParam int[] n) {
+
+        if (n.length%2!=0) return 0;
+
+        int sum1 = 0, sum2=0;
+
+        for (int i = 0; i < n.length/2; i++) {
+
+            sum1+=n[i];
+            sum2+=n[n.length-1-i];
+
+        }
+
+        if (sum1==sum2){
+            return 1;
+        }
+        return 0;
+    }
 }
