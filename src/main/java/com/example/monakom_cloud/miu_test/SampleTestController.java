@@ -584,6 +584,7 @@ public class SampleTestController {
             boolean isPrime = true;
 
             if (i > 1) {
+                System.out.println();
 
                 for (int j = 2; j * 2 <= i; j++) {
 
@@ -600,5 +601,130 @@ public class SampleTestController {
             }
         }
         return count;
+    }
+
+    /**
+     * input
+     * 17
+     *
+     *
+     * result process
+     * 1,
+     * 1,
+     * 3*1(b) +2*1(a) = 5
+     * 3*5(b) +2*1(a) = 17
+     * 3*17(b) + 2*5(a) = 61
+
+     */
+
+    @GetMapping("/q10")
+    public Integer test10(@RequestParam int n) {
+
+        if (n<0) return 0;
+        if (n==1) return 1;
+        int c =0, a=1, b=1;
+
+        while(c<n)
+        {
+
+            c = 3 * b + 2 * a;
+            a =b;
+            b =c;
+
+            log.warn("[c"+c +"] [b"+b+"] [a"+a+"]");
+        }
+        if(c==n)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
+
+    /**
+     * Question 11
+     * A Meera array is any array that contains the value 1 if and only if it contains 9.
+     * It is okay if a Meera array contains more than one value 1 and more than one 9.
+
+     * The array {7,9,0,10,1}       is a Meera array because it contains 1 and 9.
+     * The array {6,10,8}           is a Meera array because it contains no 1 and no 9.
+     * The array {7,6,1}            is not a Meera array because it contains 1 but does not contain a 9.
+     * The array {9,10,0}           is not a Meera array because it contains a 9 but does not contain 1.
+     * The array {1,1,0,8,0,9,9,1}  is a Meera array.
+
+     * Write a function named isMeera that returns 1 if it's array argument is a Merra array
+     * and returns 0 otherwise.
+     * If you are programming in Java or C#, the function signature is int isMeera(int[] a)
+     */
+
+    @GetMapping("/q11")
+    public Integer test11(@RequestParam int[] n) {
+
+        boolean isMatchMin = false;
+        boolean isMatchMax = false;
+
+        for (int i = 0; i < n.length; i++) {
+
+            if (n[i] == 1) isMatchMin = true;
+
+            else if (n[i] == 9) isMatchMax = true;
+
+        }
+
+        if (isMatchMin == isMatchMax){
+            return 1;
+        }
+        return 0;
+    }
+
+
+    /**
+     * Question 12
+     * A Bean array is defined to be an integer array where for every value n in the array,
+     * there is also an element 2n, 2n+1 or n/2 in the array.
+
+     * for example {4,9,8} is a Bean array because
+     *      for 4, 8 is present,
+     *      for 9, 4 is present,
+     *      for 8, 4 is present.
+
+     * Other Bean arrays include {2,2,5,11,23}, {7,7,3,6} and {0}.
+
+     * Not a Bean array {3,8,4} because of the value 3 which
+     * requires that the array contain either the value 6, 7 or 1 and none of these values are in the array.
+
+     * Write a function named isBean that returns 1 if it's array argument is a Bean array,
+     * otherwise it returns a 0.
+     * if you are programming in Java or C#, the function signature is int isBean(int[] a)
+
+
+     * explanation
+     * ex: array[4,9,8] start from 4
+     *      => [4 == 4*2] || [4 == 4*2+1] || [4 == 4/2] => not-all-case
+     *      => [9 == 9*2] || [9 == 9*2+1] || [9 == 9/2] => not-all-case
+     *      => [8 == 8*2] || [8 == 8*2+1] || [8 == 8/2] => true in last case (8 == 8/2)
+     */
+    @GetMapping("/q12")
+    public Integer test12(@RequestParam int[] a) {
+        int isBean = 0;
+
+        for (int i = 0; i < a.length; i++) {
+
+            for (int j = 0; j < a.length; j++) {
+
+                log.info(a[i] +" == " +2*a[j] +" || "+ a[i] +" == "+ 2*a[j] + 1 +" || "+ a[i] +" == " +a[j]/2);
+
+                if (a[i] == 2*a[j] || a[i] == 2*a[j] + 1 || a[i] == a[j]/2) {
+                    isBean = 1;
+                    break;
+                }
+            }
+            return isBean;
+        }
+        return isBean;
     }
 }
