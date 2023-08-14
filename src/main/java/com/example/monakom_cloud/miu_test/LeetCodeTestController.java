@@ -1,10 +1,20 @@
 package com.example.monakom_cloud.miu_test;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+@Slf4j
+@RestController
+@RequestMapping("let-code/")
 public class LeetCodeTestController {
+
 
     /**
      * Sample Input
@@ -326,8 +336,118 @@ public class LeetCodeTestController {
         for (Integer integer : a) {
 
             System.out.print(integer+" ");
+
         }
 
+    }
+
+
+    /**
+     *
+     * Example 1:
+     * Input: nums = [1,1,2]
+     * Output: 2, nums = [1,2,_]
+     * Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+     * It does not matter what you leave beyond the returned k (hence they are underscores).
+
+
+     * Example 2:
+     * Input: nums = [0,0,1,1,1,2,2,3,3,4]
+     * Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+     * Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+     * It does not matter what you leave beyond the returned k (hence they are underscores).
+     */
+
+    @GetMapping("test4")
+    public int removeDuplicates(int[] nums) {
+
+        // style 1 (need 7ms for complete)
+        /*
+        int length = nums.length;
+        if (length<=1) return 1;
+
+
+        int[] res = new int[length];
+        int idx=0;
+
+        for (int i = 0; i < length-1; i++) {
+
+
+            if (nums[i]!=nums[i+1]){
+                res[idx] = nums[i];
+                idx++;
+            }
+        }
+
+
+        res[idx] = nums[length-1];
+
+
+        for (int i = 0; i < res.length; i++) {
+            nums[i] = res[i];
+        }
+
+
+        System.out.println(Arrays.toString(nums));
+        return idx+1;*/
+
+
+        // style 2 (need 2mn for complete)
+
+        ArrayList<Integer> expnum = new ArrayList<>();
+        expnum.add(nums[0]);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[i - 1]) {
+                expnum.add(nums[i]);
+            } else {
+
+            }
+        }
+
+        for (int i = 0; i < expnum.size(); i++) {
+            nums[i] = expnum.get(i);
+        }
+
+        return expnum.size();
+
+
+    }
+
+
+    /**
+     * Example 1:
+     * Input: nums = [3,2,2,3], val = 3
+     * Output: 2, nums = [2,2,_,_]
+     * Explanation: Your function should return k = 2, with the first two elements of nums being 2.
+     * It does not matter what you leave beyond the returned k (hence they are underscores).
+
+
+     * Example 2:
+     * Input: nums = [0,1,2,2,3,0,4,2], val = 2
+     * Output: 5, nums = [0,1,4,0,3,_,_,_]
+     * Explanation: Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.
+     * Note that the five elements can be returned in any order.
+     * It does not matter what you leave beyond the returned k (hence they are underscores).
+     */
+
+    @GetMapping("test5")
+    public int removeElement(int[] nums, int val) {
+
+        // style 1 (this is the fast way) need only 1ms for complete
+
+        ArrayList<Integer> expnum= new ArrayList<>();
+        for (int i = 0; i<nums.length; i++){
+
+            if(nums[i] != val) {
+                expnum.add(nums[i]);
+            }
+        }
+
+        for (int i = 0; i<expnum.size(); i++){
+            nums[i] = expnum.get(i);
+        }
+
+        return expnum.size();
     }
 
 
