@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 @Slf4j
@@ -452,4 +453,109 @@ public class LeetCodeTestController {
 
 
 
+    @GetMapping("test6")
+    public boolean containsDuplicate(int[] nums) {
+
+
+
+        // style 1 (memory lake) it need too much memory space. (bad way)
+        /*for (int i = 0 ; i<nums.length; i++){
+
+            for (int j = i+1; j < nums.length; j++) {
+
+                if (nums[i] == nums[j]){
+                    return true;
+                }
+            }
+        }*/
+
+
+        // style 2 (still slow) because it take time for sort
+        /*Arrays.sort(nums);
+        for (int i = 0 ; i<nums.length-1; i++){
+            if (nums[i] == nums[i+1]){
+                return true;
+            }
+        }*/
+
+
+
+        // style 3 (this fast way) just loop and add into hashSet
+        // hashSet can add only qunit key
+        // if u add the duplicate key it will return false
+        HashSet<Integer> res = new HashSet<>();
+        for (int i = 0; i <nums.length-1; i++) {
+
+            if (res.add(nums[i]) == false){
+                return true;
+            }
+
+        }
+
+
+        return false;
+    }
+
+
+    /**
+     * Example 1:
+     *
+     * Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+     * Output: [1,2,2,3,5,6]
+     * Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+     * The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+     * Example 2:
+     *
+     * Input: nums1 = [1], m = 1, nums2 = [], n = 0
+     * Output: [1]
+     * Explanation: The arrays we are merging are [1] and [].
+     * The result of the merge is [1].
+     * Example 3:
+     *
+     * Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+     * Output: [1]
+     * Explanation: The arrays we are merging are [] and [1].
+     * The result of the merge is [1].
+     * Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+     */
+
+    @GetMapping("test7")
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+
+        // style 1 (fast way) need only 1ms for complete
+        int j=0;
+        for(int i=m; i<m+n; i++){
+            nums1[i] = nums2[j];
+            j++;
+        }
+        Arrays.sort(nums1);
+        System.out.println(Arrays.toString(nums1));
+    }
+
+
+
+    /**
+     *
+     * Example 1:
+     * Input: s = "A man, a plan, a canal: Panama"
+     * Output: true
+     * Explanation: "amanaplanacanalpanama" is a palindrome.
+
+     * Example 2:
+     * Input: s = "race a car"
+     * Output: false
+     * Explanation: "raceacar" is not a palindrome.
+
+     * Example 3:
+     * Input: s = " "
+     * Output: true
+     * Explanation: s is an empty string "" after removing non-alphanumeric characters.
+     * Since an empty string reads the same forward and backward, it is a palindrome.
+     */
+    @GetMapping("test8")
+    public boolean isPalindrome(String s) {
+        String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String rev = new StringBuffer(actual).reverse().toString();
+        return actual.equals(rev);
+    }
 }
