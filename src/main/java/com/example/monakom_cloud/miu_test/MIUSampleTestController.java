@@ -14,7 +14,7 @@ import java.util.Arrays;
 @RestController
 @AllArgsConstructor
 @RequestMapping("miu-test")
-public class SampleTestController {
+public class MIUSampleTestController {
 
 
     /**
@@ -848,5 +848,210 @@ public class SampleTestController {
             return 1;
         }
         return 0;
+    }
+
+
+    /**
+     * Question 16
+     * A Madhav array has the following property.
+     * a[0] = a[1] + a[2] = a[3] + a[4] + a[5] = a[6] + a[7] + a[8] + a[9] = ...
+     * The length of a Madhav array must be n*(n+1)/2 for some n.
+     * Write a method named isMadhavArray that returns 1 if its array argument is a Madhav array,
+     * otherwise it returns 0. If you are programming in Java or C# the function signature is
+     * int isMadhavArray(int[] a)
+     *
+     * Examples
+     *  -----------------------------------|-------|---------------------------------------------------
+     * | if a is                           | return| reason                                            |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {2,1,1}                           | 1     | 2 = 1 + 1                                         |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {2,1,1,4,-1,-1}                   | 1     | 2 = 1 + 1, 2 = 4 + -1 + -1                        |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {6,2,4,2,2,2,1,5,0,0}             | 1     | 6 = 2 + 4, 6 = 2 + 2 + 2, 6 = 1 + 5 + 0 + 0       |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {18,9,10,6,6,6}                   | 0     | 18 != 9 + 10                                      |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {-6,-3,-3,8,-5,-4}                | 0     | -6 != 8 + -5 + -4                                 |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {0,0,0,0,0,0,0,0,0,0,1,1,1,-2,-1} | 1     | 0 = 0+0, 0 = 0+0+0, 0 = 0+0+0+0, 0 = 1+1+1+-2+-1  |
+     * |-----------------------------------|-------|---------------------------------------------------|
+     * | {3,1,2,3,0}                       | 0     | The length of the array is 5, but 5 != n*(n+1)/2  |
+     *  -----------------------------------|-------|---------------------------------------------------
+     */
+    @GetMapping("/q16")
+    public int test16(@RequestParam int[] n) {
+
+        int base = n[0];
+        int sum = 0;
+        int sumSize = 2;
+        for (int i = 1; i < n.length; ) {
+
+            try {
+                for (int j = 0; j < sumSize; j++) {
+                    log.warn("inner log " + i);
+                    sum = sum + n[i];
+                    i++;
+                }
+
+                log.error("check : " + sum + " && " + base);
+                if (sum != base) return 0;
+
+                sumSize++;
+                sum = 0;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return 0;
+            }
+        }
+
+        return 1;
+    }
+
+
+    /**
+     *
+     * Question 17
+     * An array is defined to be inertial if the following conditions hold:
+     * a. it contains at least one odd value
+     * b. the maximum value in the array is even
+     * c. every odd value is greater than every even value that is not the maximum value.
+     * so {11,4,20,9,2,8} is inertial because
+     *  - it contains at least one odd value
+     *  - the maximum value in the array is 20 which is even
+     *  - the two odd values (11 and 9) are greater than all the even values that are not
+     * equal to 20 (the maximum), i.e {4,2,8}.
+     * However, {12,11,4,9,2,3,10} is not inertial because it fails condition (c), i.e.
+     * 10 (which is even) is greater than 9 (which is odd), and 10 is not the maximum value
+     * in the array.
+
+     * Write a function called isInertial that accepts an integer array and returns 1 if the array
+     * is inertial; otherwise it returns 0.
+     * If you are programing in Java or C#, the function signature is
+     * int isInertial(int[] a)
+
+     * Some other examples:
+     *  -----------------------|--------|-----------------------------------------------------------------------
+     * | if the input array is | return | reason                                                                |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {1}                   | 0      | fails condition (a) - the maximum value must be even                  |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {2}                   | 0      | fails condition (b) - the array must contain at least one odd value   |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {1,2,3,4}             | 0      | fails condition (c) - 1(which is odd) is not greater than all even    |
+     * |                       |        | values other than the maximum (1 is less than 2 which is not the max) |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {1,1,1,1,1,1,2}       | 1      | there is no even number other than the maximum. Hence, there can be no|
+     * |                       |        | other even values that are greater than 1.                            |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {2,12,4,6,8,11}       | 1      | 11, the only odd value is greater than all even values except 12 which|
+     * |                       |        | is the maximum value in the array.                                    |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {2,12,12,4,6,8,11}    | 1      | same as previous, ie, it is ok if maximum value occurs more than once |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {-2,-4,-6,-8,-11}     | 0      | -8, which is even, is not the maximum value but is greater than -11   |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {2,3,5,7}             | 0      | the maximum value is odd                                              |
+     * |-----------------------|--------|-----------------------------------------------------------------------|
+     * | {2,4,6,8,10}          | 0      | there is no odd value in the array                                    |
+     *  -----------------------|--------|-----------------------------------------------------------------------
+
+     * NOTE: To ease debugging, i will return a string
+     */
+
+    @GetMapping("/q17")
+    public String test17(@RequestParam int[] n) {
+
+        // style 1
+        /*int max = 0;
+        boolean isContainOdd = false;
+        int[] evenOdd = new int[n.length];
+        int evenIdx = 0;
+        int oddIdx = n.length-1;
+
+        for (int i = 0; i < n.length; i++) {
+
+            if (n[i]%2==0) {
+                evenOdd[evenIdx] = n[i];
+                evenIdx++;
+
+            }else {
+                evenOdd[oddIdx] = n[i];
+                oddIdx--;
+                isContainOdd = true;
+            }
+
+            if (max <n[i]) max = n[i];
+
+        }
+
+
+        if (max%2!=0 || !isContainOdd) {
+            log.warn(MessageFormat.format("max : {0} isContainOdd : {1}", max%2!=0, isContainOdd));
+            return "false";
+        }
+
+
+        for (int i = 0; i < evenOdd.length; i++) {
+            if (evenOdd[i] == max) continue;
+
+            for (int j = evenIdx+1; j < evenOdd.length; j++) {
+
+                if (evenOdd[i] < evenOdd[j]) {
+                    log.warn("false cause of : "+ evenOdd[i]+" < " + evenOdd[j]);
+                    return "false";
+                }
+            }
+        }*/
+
+
+        int max = 0, currentEven = 0,previousEven = 0, currentOdd = 0;
+        boolean case3 = true;
+
+        // style 2
+        for (int i = 0; i < n.length; i++) {
+
+            //check max
+            if (max <n[i]) max = n[i];
+
+
+            //check odd OR even
+            if (n[i]%2==0) {
+                currentEven = n[i];
+            }else {
+                currentOdd = n[i];
+
+            }
+
+
+            // odd must be small then even
+            if (currentOdd < currentEven) {
+                log.warn(MessageFormat.format("[currentOdd < currentEven : {0} {1}]", currentOdd, currentEven));
+                case3 = false;
+            }
+
+
+
+
+            log.error(MessageFormat.format("current even {0}, previousEven {1}, currentOdd {2}, currentMax {3}", currentEven, previousEven, currentOdd, max));
+        }
+
+        if (currentOdd==0){
+            log.warn(MessageFormat.format("fails cause [currentOdd == 0 : {0}]", currentOdd ));
+            return "false";
+        }
+
+        if (max%2!=0) {
+            log.warn(MessageFormat.format(" [max%2!=0 : {0}]", max%2));
+            return "false";
+        }
+
+        if (!case3) {
+            if (max == currentEven) {
+                return "true";
+            }
+            return "false";
+        }
+
+        return "true";
     }
 }

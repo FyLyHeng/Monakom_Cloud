@@ -3,6 +3,7 @@ package com.example.monakom_cloud.miu_test;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.MessageFormat;
@@ -553,9 +554,44 @@ public class LeetCodeTestController {
      * Since an empty string reads the same forward and backward, it is a palindrome.
      */
     @GetMapping("test8")
-    public boolean isPalindrome(String s) {
+    public boolean isPalindrome(@RequestParam  String s) {
         String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
         String rev = new StringBuffer(actual).reverse().toString();
         return actual.equals(rev);
+    }
+
+
+    /**
+     *
+     * Example 1:
+     * Input: x = 121
+     * Output: true
+     * Explanation: 121 reads as 121 from left to right and from right to left.
+
+     * Example 2:
+     * Input: x = -121
+     * Output: false
+     * Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+     * Example 3:
+     * Input: x = 10
+     * Output: false
+     * Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+     */
+    @GetMapping("test9")
+    public boolean isPalindrome(@RequestParam int x) {
+
+        if (x<0) return false;
+
+        int cloneX = x;
+        int reverse = 0;
+        while (cloneX != 0) {
+            reverse = reverse * 10 + cloneX % 10;
+            cloneX /= 10;
+        }
+        log.warn("x :"+x);
+        log.warn("r :"+reverse);
+
+        return x==reverse;
     }
 }
