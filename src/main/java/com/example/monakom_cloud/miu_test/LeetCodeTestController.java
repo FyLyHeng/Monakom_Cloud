@@ -576,7 +576,7 @@ public class LeetCodeTestController {
      * Example 3:
      * Input: x = 10
      * Output: false
-     * Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+     * Explanation: Reads 01 from right to left. Therefore, it is not a palindrome.
      */
     @GetMapping("test9")
     public boolean isPalindrome(@RequestParam int x) {
@@ -594,4 +594,26 @@ public class LeetCodeTestController {
 
         return x==reverse;
     }
+
+    @GetMapping("test10")
+    public String longestCommonPrefix(@RequestParam String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        String prefix = strs[0];
+
+        for (int i = 1; i < strs.length; i++) {
+            while (strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+
+
+        return prefix;
+    }
+
 }
