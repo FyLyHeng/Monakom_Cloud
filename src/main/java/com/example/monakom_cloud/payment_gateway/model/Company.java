@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.model.pgw;
+package com.example.monakom_cloud.payment_gateway.model;
 
 import com.example.monakom_cloud.core.BaseEntity;
 import jakarta.persistence.Entity;

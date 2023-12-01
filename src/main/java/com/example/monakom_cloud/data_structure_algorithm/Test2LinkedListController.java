@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("ll")
-public class LinkedListTestController {
+public class Test2LinkedListController {
 
 
     @GetMapping("/test1")

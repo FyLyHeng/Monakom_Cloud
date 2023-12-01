@@ -1,5 +1,6 @@
 package com.example.monakom_cloud.data_structure_algorithm;
 
+import com.example.monakom_cloud.data_structure_algorithm.test_1.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 @Slf4j
 @RestController
 @RequestMapping("dsa")
-public class DataStructureAlgorithmTestController {
+public class Test1ArrayRecursiveController {
 
     @GetMapping("recursive")
     public void recursiveFunction() {

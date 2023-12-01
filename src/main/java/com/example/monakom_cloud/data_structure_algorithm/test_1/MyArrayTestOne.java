@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.data_structure_algorithm;
+package com.example.monakom_cloud.data_structure_algorithm.test_1;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 @Slf4j
 public class MyArrayTestOne {
-    int[] arr = null;
+    public int[] arr = null;
 
     public MyArrayTestOne(int size) {
         arr = new int[size];

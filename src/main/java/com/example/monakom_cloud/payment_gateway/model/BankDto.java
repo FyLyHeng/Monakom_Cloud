@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.model.pgw;
+package com.example.monakom_cloud.payment_gateway.model;
 
 import org.springframework.stereotype.Component;
 

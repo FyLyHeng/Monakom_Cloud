@@ -4,7 +4,6 @@ import com.example.monakom_cloud.core.exception.NotFoundExecution;
 import com.example.monakom_cloud.core.repo.BaseRepository;
 import com.example.monakom_cloud.core.response.JSONFormat;
 import com.example.monakom_cloud.core.response.ResponseDTO;
-import com.example.monakom_cloud.repository.BankRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

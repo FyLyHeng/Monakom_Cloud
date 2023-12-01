@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.data_structure_algorithm;
+package com.example.monakom_cloud.data_structure_algorithm.test_1;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,7 @@ public class MyArrayTestTwo {
     }
 
 
-    int[][] arr = null;
+    public int[][] arr = null;
 
     public MyArrayTestTwo(int rowsSize, int columnsSize) {
 

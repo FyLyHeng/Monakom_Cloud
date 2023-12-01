@@ -1,10 +1,9 @@
-package com.example.monakom_cloud.repository;
+package com.example.monakom_cloud.payment_gateway.repository;
 
-import com.example.monakom_cloud.model.pgw.Bank;
+import com.example.monakom_cloud.payment_gateway.model.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
 
 @Repository
 public interface BankRepository extends

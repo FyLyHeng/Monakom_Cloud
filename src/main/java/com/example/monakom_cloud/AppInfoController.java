@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.controller;
+package com.example.monakom_cloud;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/app")
-public class AppInfo  {
+public class AppInfoController {
 
 
 

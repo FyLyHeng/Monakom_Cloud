@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.data_structure_algorithm;
+package com.example.monakom_cloud.data_structure_algorithm.test_1;
 
 import java.util.Arrays;
 

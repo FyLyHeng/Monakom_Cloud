@@ -1,8 +1,8 @@
-package com.example.monakom_cloud.controller;
+package com.example.monakom_cloud.payment_gateway;
 
 import com.example.monakom_cloud.core.response.JSONFormat;
 import com.example.monakom_cloud.core.response.ResponseDTO;
-import com.example.monakom_cloud.repository.BankRepository;
+import com.example.monakom_cloud.payment_gateway.repository.BankRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
