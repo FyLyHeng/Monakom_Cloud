@@ -1,35 +1,35 @@
 package com.example.monakom_cloud.payment_gateway;
 
+import com.example.monakom_cloud.core.GenericRestfulController;
 import com.example.monakom_cloud.core.response.JSONFormat;
 import com.example.monakom_cloud.core.response.ResponseDTO;
-import com.example.monakom_cloud.payment_gateway.repository.BankRepository;
-import lombok.AllArgsConstructor;
+import com.example.monakom_cloud.payment_gateway.model.Bank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
 @Slf4j
 @RestController
 @RequestMapping("/bank")
-@AllArgsConstructor
-public class BankController  {
-
+public class BankController extends GenericRestfulController<Bank> {
     @Autowired
-    private JSONFormat jsonFormat;
-    @Autowired
-    private BankRepository bankRepository;
+    BankController(JSONFormat jsonFormat, BankRepository repository){
+        super(jsonFormat, repository);
+    }
 
-//    public BankController() {
-//        //super(baseRepository);
-//        log.warn("bank controller may init in default cont");
-//    }
+    @Override
+    @PostMapping
+    public ResponseDTO create(@RequestBody Bank entity) {
+        log.warn("I need to add some log before save");
+        return jsonFormat.responseObj(repository.save(entity));
+    }
 
     @GetMapping("/list-dto")
     public ResponseDTO list() {
-        return jsonFormat.responseObj(Arrays.asList("string1", "string2"));//bankRepository.findAll()
+        return jsonFormat.responseObj(Arrays.asList("string1", "string2"));
     }
+
+
 }

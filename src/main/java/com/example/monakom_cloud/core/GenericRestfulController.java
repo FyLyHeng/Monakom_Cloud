@@ -1,12 +1,11 @@
 package com.example.monakom_cloud.core;
 
-import com.example.monakom_cloud.core.exception.NotFoundExecution;
+import com.example.monakom_cloud.core.exception.NotFoundException;
 import com.example.monakom_cloud.core.repo.BaseRepository;
 import com.example.monakom_cloud.core.response.JSONFormat;
 import com.example.monakom_cloud.core.response.ResponseDTO;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,40 +13,45 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.beans.ConstructorProperties;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
-public abstract class GenericRestfulController<T> {
+public abstract class GenericRestfulController<T extends BaseEntity> {
 
-    @Autowired
-    public JSONFormat jsonFormat;
-    public final BaseRepository<T> repository;
-    private final String resourceName;
+    protected JSONFormat jsonFormat;
+    protected BaseRepository<T> repository;
+    protected String resourceName;
 
-    @ConstructorProperties({"BaseRepository<T>"})
-    public GenericRestfulController(BaseRepository<T> baseRepository) {
-        this.repository  = baseRepository;
+    public GenericRestfulController(JSONFormat jsonFormat, BaseRepository<T> targetRepo) {
+        this.jsonFormat = jsonFormat;
+        this.repository = targetRepo;
         this.resourceName = this.getGenericTypeClass().getSimpleName();
+    }
+
+    @PostMapping
+    public ResponseDTO create(@RequestBody T entity) {
+        var data = repository.save(entity);
+        return jsonFormat.responseObj(data);
     }
 
     @GetMapping("/all")
     public ResponseDTO all() {
-        return jsonFormat.responseObj(Arrays.asList("s1", "s2"));
+        return jsonFormat.responseObj(repository.findAll());
     }
 
 
     @GetMapping("{id}")
     public ResponseDTO getById(@PathVariable Long id) throws Throwable {
 
-        T data = repository.findById(id).orElseThrow(this::notFoundThrowable);
+        T data = repository.findById(id).orElseThrow(() -> notFoundThrowable(id));
         return jsonFormat.responseObj(data);
     }
-
 
     /**
      *
@@ -80,11 +84,12 @@ public abstract class GenericRestfulController<T> {
 
     //===============================================
 
-    private Throwable notFoundThrowable(){
-        return new NotFoundExecution(resourceName +" Id Not Found!");
+    private Throwable notFoundThrowable(Long id) {
+        //MessageFormat.format("{0} Id : {1} Not Found!", resourceName, id);
+        return new NotFoundException(String.format("%s Id : %s Not Found!", resourceName, id));
     }
     private void notFound(){
-        throw new NotFoundExecution(resourceName +" Id Not Found!");
+        throw new NotFoundException(resourceName +" Id Not Found!");
     }
     @SuppressWarnings("unchecked")
     private Class<T> getGenericTypeClass() {

@@ -1,26 +1,38 @@
 package com.example.monakom_cloud;
 
+import com.example.monakom_cloud.core.response.JSONFormat;
+import com.example.monakom_cloud.core.response.ResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/app")
 public class AppInfoController {
 
+    private JSONFormat jsonFormat;
+
+    @Autowired
+    AppInfoController(JSONFormat jsonFormat) {
+        this.jsonFormat = jsonFormat;
+    }
 
 
     @GetMapping("/info")
-    public Map<String,String> Info(){
+    public ResponseDTO Info(){
 
-        return Map.of(
+        var result =  Map.of(
                 "App","Clone Munakom Cloud solution",
                 "Version","1.0.0.1",
                 "ReleaseDate","2023-03-23",
                 "Status","Stable"
         );
+
+        return jsonFormat.responseObj(result);
     }
 
 
@@ -31,7 +43,7 @@ public class AppInfoController {
     }
 
     @GetMapping("/list-dto")
-    public String list() {
-        return "";//jsonFormat.responseObj(Arrays.asList("string1", "string2"));//bankRepository.findAll()
+    public ResponseDTO list() {
+        return jsonFormat.responseObj(Arrays.asList("string1", "string2"));
     }
 }

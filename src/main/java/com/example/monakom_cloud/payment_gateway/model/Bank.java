@@ -18,7 +18,7 @@ public class Bank extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 //    var bankName : String = "",
 //    var bankCode : String? = "",
 //    var host : String? = "",
