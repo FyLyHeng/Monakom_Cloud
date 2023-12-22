@@ -1,6 +1,7 @@
 package com.example.monakom_cloud.data_structure_algorithm;
 
-import com.example.monakom_cloud.data_structure_algorithm.test_1.*;
+import com.example.monakom_cloud.core.Util;
+import com.example.monakom_cloud.data_structure_algorithm.test_1_array.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

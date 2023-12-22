@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/app")
 public class AppInfoController {
 
-    private JSONFormat jsonFormat;
+    private final JSONFormat jsonFormat;
 
     @Autowired
     AppInfoController(JSONFormat jsonFormat) {

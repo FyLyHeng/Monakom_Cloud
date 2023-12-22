@@ -1,4 +1,4 @@
-package com.example.monakom_cloud.data_structure_algorithm.test_1;
+package com.example.monakom_cloud.data_structure_algorithm.test_1_array;
 
 public class Recursion {
 
